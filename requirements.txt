@@ -1,0 +1,11 @@
+# CMS framework to mappings data to
+#
+# For more information:
+# https://docs.djangoproject.com/en/1.9/
+django==1.9.6
+
+# XML Parser
+#
+# For more information:
+# https://github.com/lxml/lxml
+lxml==3.6.0
