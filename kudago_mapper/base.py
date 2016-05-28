@@ -9,6 +9,9 @@ class MapperBase(object):
     _transforms = {}
 
     def register_transform(self, mapper):
+        if not mapper.element_type:
+            raise ValueError('Mapper to transform data must have '
+                             '`element_type` specified')
         self._transforms[mapper.element_type] = mapper
 
     def load(self):
