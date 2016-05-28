@@ -46,7 +46,9 @@ class XmlTransform(TransformBase):
     def convert_element(self, element):
         for child in element.iterchildren():
             try:
-                getattr(self, 'convert_child_' + child.tag)(child)
+                fn = getattr(self, 'convert_child_' + child.tag)
             except AttributeError:
                 self.logger.warning('{}->{} conversion was '
                                     'missed'.format(element.tag, child.tag))
+            else:
+                fn(child)
