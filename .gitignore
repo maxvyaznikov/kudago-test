@@ -60,3 +60,12 @@ target/
 
 #Ipython Notebook
 .ipynb_checkpoints
+
+# IDE files
+.idea/
+
+# Example database
+example/db.sqlite3
+
+# Python virtual environment
+python-env/
