@@ -14,5 +14,7 @@ class Command(BaseCommand):
         # objects in DB
         events = {event.external_id: event for event in Event.objects.all()}
         source = XmlFileMapper(source_file=settings.TEST_SOURCE_FILE_PATH)
+        # TODO: add transforms for other DB objects such Place and Sessions
+        # and register it here after that
         source.register_transform(TestXmlEventTransform(events))
         source.load()
