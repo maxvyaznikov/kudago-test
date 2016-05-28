@@ -13,8 +13,6 @@ class Command(BaseCommand):
         # Dicts to keep relationship between objects from external source and
         # objects in DB
         events = {event.external_id: event for event in Event.objects.all()}
-        places = {place.external_id: place for place in Place.objects.all()}
         source = XmlFileMapper(source_file=settings.TEST_SOURCE_FILE_PATH)
         source.register_transform(TestXmlEventTransform(events))
-        # source.register_transform(TestXmlPlaceTransform(places))
         source.load()
