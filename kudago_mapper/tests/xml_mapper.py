@@ -1,11 +1,10 @@
 from unittest import TestCase
 
-from kudago_mapper.base import TransformBase
-from kudago_mapper.xml import XmlFileMapper
+from kudago_mapper.xml_mapper import XmlFileMapper, XmlTransform
 from kudago_mapper.tests.fake_models import Event
 
 
-class TestXmlEventTransform(TransformBase):
+class TestXmlEventTransform(XmlTransform):
     element_type = 'event'
     events = None
 

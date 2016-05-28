@@ -1,13 +1,22 @@
-import logging
 
 
 class MapperBase(object):
+    """
+    Interface for data mappers with methods to load data, register objects to
+    make transformations of data and other
+    """
+    # Keep transforms in one dict as {element_type: transform object}
     _transforms = {}
 
     def register_transform(self, mapper):
         self._transforms[mapper.element_type] = mapper
 
     def load(self):
+        """
+        Override this method to load data from sources
+
+        :return: None
+        """
         raise NotImplementedError('Override `load` method to load data from '
                                   'source')
 
@@ -38,15 +47,7 @@ class MapperBase(object):
 
 
 class TransformBase(object):
-    # Name of element to bind to.
-    element_type = None
-    logger = logging.getLogger(__name__ + '.' + __qualname__)
-
-    def convert_element(self, element):
-        # Override this function and place your code here
-        for child in element.iterchildren():
-            try:
-                getattr(self, 'convert_child_' + child.tag)(child)
-            except AttributeError:
-                self.logger.warning('{}->{} conversion was '
-                                    'missed'.format(element.tag, child.tag))
+    """
+    Data transform class to help convert elements from external source
+    """
+    element_type = None  # Type of element to bind this data transform to

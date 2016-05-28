@@ -1,9 +1,9 @@
-from kudago_mapper.base import TransformBase
+from kudago_mapper.xml_mapper import XmlTransform
 
 from afisha.models import Event, Place, Tag, Metro, Image
 
 
-class TestXmlEventTransform(TransformBase):
+class TestXmlEventTransform(XmlTransform):
     element_type = 'event'
     events = None
 

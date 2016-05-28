@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 from django.conf import settings
-from kudago_mapper.xml import XmlFileMapper
+from kudago_mapper.xml_mapper import XmlFileMapper
 
 from afisha.mapper import TestXmlEventTransform
 
