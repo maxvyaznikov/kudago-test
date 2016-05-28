@@ -11,8 +11,6 @@ def convert_manytomany_children(element, cached_items, model):
     :type cached_items: dict in format of {external_id: DB object}
     :param model: DB model class
     :type model: inherited from models.Model
-    :param bind_name: Name of field of model used as key into cached_items
-    :type bind_name: string
     :return: List of DB objects ID was found or created
     :rtype: list
     """
