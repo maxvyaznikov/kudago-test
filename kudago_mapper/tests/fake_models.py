@@ -7,7 +7,7 @@ class FakeDjangoModel(object):
 
 
 class Event(FakeDjangoModel):
-    source_id = None
+    external_id = None
     has_price = None
     type = None
     title = None

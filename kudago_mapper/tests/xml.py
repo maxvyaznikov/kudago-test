@@ -14,11 +14,11 @@ class TestXmlEventTransform(TransformBase):
 
     def convert_element(self, element):
         self.event = Event()
-        self.event.source_id = int(element.get('id'))
+        self.event.external_id = int(element.get('id'))
         self.event.has_price = element.get('price', True)
         self.event.type = element.get('type')
         super().convert_element(element)
-        self.events[self.event.source_id] = self.event
+        self.events[self.event.external_id] = self.event
 
     def convert_child_title(self, child):
         self.event.title = child.text
