@@ -9,14 +9,11 @@ class TestXmlEventTransform(XmlTransform):
     events = None
     tags = None  # Cached tags from DB
     metro = None  # Cached metro from DB
-    images = None  # Cached images from DB
 
     def __init__(self, events):
         self.events = events
         self.tags = {tag.name: tag.id for tag in Tag.objects.all()}
         self.metro = {metro.name: metro.id for metro in Metro.objects.all()}
-        self.images = {image.url: image.id for image in
-                       EventImage.objects.all()}
 
     def convert_element(self, element):
         # Extract External ID first
@@ -30,7 +27,11 @@ class TestXmlEventTransform(XmlTransform):
         # Save new event before convert children elements to make possible to
         #  create related objects in DB
         if not self.event.id:
+            self.event_images_set = {}
             self.event.save()
+        else:
+            self.event_images_set = {image.url for image in
+                                     self.event.images.all()}
         # Extract data from children
         super().convert_element(element)
         # Save in DB after all operations
@@ -62,7 +63,9 @@ class TestXmlEventTransform(XmlTransform):
     def convert_child_metros(self, child):
         self.event.metro = convert_manytomany_children(child, self.metro, Metro)
 
-    def convert_child_gallery(self, child):
-        # self.event.event_images_set = \
-        #     convert_manytomany_children(child, self.images, EventImage)
-        pass
+    def convert_child_gallery(self, element):
+        for child in element.iterchildren():
+            href = child.get('href')
+            if href and href not in self.event_images_set:
+                self.event_images_set.add(href)
+                self.event.images.create(url=href)

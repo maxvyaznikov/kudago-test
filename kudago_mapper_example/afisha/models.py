@@ -59,7 +59,7 @@ class Metro(models.Model):
 
 
 class Image(models.Model):
-    url = models.TextField()
+    url = models.CharField(max_length=1024)
 
     class Meta:
         abstract = True
@@ -69,11 +69,11 @@ class Image(models.Model):
 
 
 class EventImage(Image):
-    event = models.ForeignKey('Event')
+    event = models.ForeignKey('Event', related_name='images')
 
 
 class PlaceImage(Image):
-    place = models.ForeignKey('Place')
+    place = models.ForeignKey('Place', related_name='images')
 
 
 class Session(models.Model):

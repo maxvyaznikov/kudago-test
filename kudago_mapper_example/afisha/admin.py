@@ -1,12 +1,17 @@
 from django.contrib import admin
 
-from afisha.models import Event, Place, Session
+from afisha.models import Event, EventImage, Place, Session
+
+
+class EventImageInline(admin.TabularInline):
+    model = EventImage
 
 
 class EventAdmin(admin.ModelAdmin):
     list_display = ('external_id', 'has_price', 'type', 'title',
                     'age_restricted', 'tags_admintag')
     ordering = ('title',)
+    inlines = [EventImageInline]
 
 admin.site.register(Event, EventAdmin)
 
