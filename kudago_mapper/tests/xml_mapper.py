@@ -13,7 +13,7 @@ class TestXmlEventTransform(XmlTransform):
 
     def convert_element(self, element):
         self.event = Event()
-        self.event.external_id = int(element.get('id'))
+        self.event.external_id = element.get('id')
         self.event.has_price = element.get('price', True)
         self.event.type = element.get('type')
         super().convert_element(element)
@@ -33,14 +33,28 @@ class TestXmlEventTransform(XmlTransform):
 
 
 
-class TestMapper(TestCase):
+class TestXmlFileMapper(TestCase):
 
-    def test_event_model_creation(self):
-        events = {}
-        source = XmlFileMapper(source_file='test_source.xml')
-        source.register_transform(TestXmlEventTransform(events))
+    def _load_xml_file(self, file_name, **kwargs):
+        source = XmlFileMapper(source_file=file_name)
+        source.register_transform(TestXmlEventTransform(**kwargs))
         source.load()
 
-        event = events[93822]
+    def test_source_simple(self):
+        events = {}
+        self._load_xml_file('test_source_simple.xml', events=events)
+
+        event = events['93492']
+        self.assertEqual(event.title, 'Kodaline')
+        self.assertEqual(event.age_restricted, '18+')
+        self.assertEqual(event.text, None)
+        self.assertTrue(event.has_price)
+        self.assertEqual(event.type, 'concert')
+        self.assertListEqual(event.tags, ['18+', 'концерт', 'рок и рок-н-ролл'])
+
+    def test_source_with_long_nested_structure(self):
+        events = {}
+        self._load_xml_file('test_source_with_long_nested_structure.xml', events=events)
+
+        event = events['123']
         self.assertEqual(event.title, 'Дао')
-        self.assertEqual(event.age_restricted, '16+')
