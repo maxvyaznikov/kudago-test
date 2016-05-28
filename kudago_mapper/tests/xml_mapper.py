@@ -1,3 +1,6 @@
+"""
+Tests file for `kudago_mapper.xml_mapper.XmlFileMapper` class
+"""
 from unittest import TestCase
 
 from kudago_mapper.xml_mapper import XmlFileMapper, XmlTransform

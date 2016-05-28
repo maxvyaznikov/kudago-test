@@ -1,3 +1,6 @@
+"""
+Tests file for `kudago_mapper.xml_mapper.XmlTransform` class
+"""
 from unittest import TestCase
 from lxml import etree
 
